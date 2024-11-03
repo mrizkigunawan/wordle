@@ -37,6 +37,12 @@ describe('WordleBoard', () => {
   });
 
   describe('Rules for defining the word of the day', () => {
+    beforeEach(() => {
+      // const spy = vi.spyOn(console, 'warn');
+      // spy.mockImplementation(() => null);
+      console.warn = vi.fn();
+    });
+
     test.each([
       { wordOfTheDay: 'FLY', reason: 'must have 5 characters' },
       { wordOfTheDay: 'tests', reason: 'must be all in uppercase' },
@@ -44,10 +50,6 @@ describe('WordleBoard', () => {
     ])(
       'since $reason: $wordOfTheDay is invalid, therefore a warning must be emitted',
       async ({ wordOfTheDay }) => {
-        // const spy = vi.spyOn(console, 'warn');
-        // spy.mockImplementation(() => null);
-        console.warn = vi.fn();
-
         mount(WordleBoard, { props: { wordOfTheDay } });
 
         expect(console.warn).toHaveBeenCalled();
@@ -55,8 +57,6 @@ describe('WordleBoard', () => {
     );
 
     test('no warnings is emitted if the word of the day provided is a real uppercase english with five characters', async (wordOfTheDay) => {
-      console.warn = vi.fn();
-
       mount(WordleBoard, { props: { wordOfTheDay: 'TESTS' } });
 
       expect(console.warn).not.toHaveBeenCalled();
