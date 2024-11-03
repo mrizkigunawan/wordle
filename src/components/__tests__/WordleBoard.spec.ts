@@ -37,31 +37,18 @@ describe('WordleBoard', () => {
   });
 
   describe('Rules for defining the word of the day', () => {
-    test('if a word of the day provided does not have exactly 5 character, a warning is emitted', async () => {
-      // const spy = vi.spyOn(console, 'warn');
-      // spy.mockImplementation(() => null);
-      console.warn = vi.fn();
+    test.each(['FLY', 'tests', 'QWERT'])(
+      'if "%s" is provided, a warning is emitted',
+      async () => {
+        // const spy = vi.spyOn(console, 'warn');
+        // spy.mockImplementation(() => null);
+        console.warn = vi.fn();
 
-      mount(WordleBoard, { props: { wordOfTheDay: 'FLY' } });
+        mount(WordleBoard, { props: { wordOfTheDay: 'FLY' } });
 
-      expect(console.warn).toHaveBeenCalled();
-    });
-
-    test('if word of the day is not all in uppercase, a warning is emitted', async () => {
-      console.warn = vi.fn();
-
-      mount(WordleBoard, { props: { wordOfTheDay: 'tests' } });
-
-      expect(console.warn).toHaveBeenCalled();
-    });
-
-    test('if word of the day is not a real english word, a warning is emitted', async () => {
-      console.warn = vi.fn();
-
-      mount(WordleBoard, { props: { wordOfTheDay: 'QWERT' } });
-
-      expect(console.warn).toHaveBeenCalled();
-    });
+        expect(console.warn).toHaveBeenCalled();
+      }
+    );
 
     test('no warnings is emitted if the word of the day provided is a real uppercase english with five characters', async () => {
       console.warn = vi.fn();
