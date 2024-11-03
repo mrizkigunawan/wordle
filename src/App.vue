@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  <WordleBoard msg="You did it!" />
+  <WordleBoard word-of-the-day="TESTS" />
 </template>
