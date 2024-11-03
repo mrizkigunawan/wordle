@@ -83,6 +83,12 @@ describe('WordleBoard', () => {
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
 
-    test.todo('player guesses can only contain letters');
+    test('player guesses can only contain letters', async () => {
+      await playerSubmitGuess('H3!RT');
+
+      expect(
+        wrapper.find<HTMLInputElement>('input[type="text"]').element.value
+      ).toEqual('HRT');
+    });
   });
 });

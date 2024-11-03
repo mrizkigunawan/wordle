@@ -18,7 +18,10 @@
       return guessInProgress.value;
     },
     set(rawValue) {
-      guessInProgress.value = rawValue.slice(0, WORD_SIZE).toUpperCase();
+      guessInProgress.value = rawValue
+        .slice(0, WORD_SIZE)
+        .toUpperCase()
+        .replace(/[^A-Z]+/gi, '');
     },
   });
 
