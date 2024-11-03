@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from '@/settings';
   import englishWords from '@/englishWordsWith5Letters.json';
 
@@ -12,12 +12,21 @@
 
   const guessInProgress = ref('');
   const guessSubmitted = ref('');
+
+  const formattedGuessInProgress = computed({
+    get() {
+      return guessInProgress.value;
+    },
+    set(rawValue) {
+      guessInProgress.value = rawValue.slice(0, 5);
+    },
+  });
 </script>
 
 <template>
   <input
     type="text"
-    v-model="guessInProgress"
+    v-model="formattedGuessInProgress"
     @keydown.enter="guessSubmitted = guessInProgress"
   />
   <p
