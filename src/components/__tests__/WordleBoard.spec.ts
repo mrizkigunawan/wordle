@@ -17,10 +17,17 @@ describe('WordleBoard', () => {
     wrapper = mount(WordleBoard, { props: { wordOfTheDay } });
   });
 
+  async function playerTypesGuess(guess: string) {
+    await wrapper.find('input[type="text"]').setValue(guess);
+  }
+
+  async function playerPressesEnter() {
+    await wrapper.find('input[type="text"]').trigger('keydown.enter');
+  }
+
   async function playerTypesAndSubmitsGuess(guess: string) {
-    const guessInput = wrapper.find('input[type="text"]');
-    await guessInput.setValue(guess);
-    await guessInput.trigger('keydown.enter');
+    playerTypesGuess(guess);
+    playerPressesEnter();
   }
 
   describe('End of the game messages', () => {
@@ -131,7 +138,7 @@ describe('WordleBoard', () => {
     });
 
     test('player guesses can only contain letters', async () => {
-      await playerTypesAndSubmitsGuess('H3!RT');
+      await playerTypesGuess('H3!RT');
 
       expect(
         wrapper.find<HTMLInputElement>('input[type="text"]').element.value
@@ -139,8 +146,8 @@ describe('WordleBoard', () => {
     });
 
     test('non-letters characters do not render on the screen while being typed', async () => {
-      await playerTypesAndSubmitsGuess('12');
-      await playerTypesAndSubmitsGuess('123');
+      await playerTypesGuess('12');
+      await playerTypesGuess('123');
 
       expect(
         wrapper.find<HTMLInputElement>('input[type="text"]').element.value
