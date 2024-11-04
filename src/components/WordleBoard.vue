@@ -30,7 +30,10 @@
         <GuessView :guess="guess" />
       </li>
     </ul>
-    <GuessInput v-on:guess-submitted="(guess) => guessSubmitted.push(guess)" />
+    <GuessInput
+      :disabled="isGameOver"
+      v-on:guess-submitted="(guess) => guessSubmitted.push(guess)"
+    />
     <p
       v-if="isGameOver"
       class="end-of-game-message"
