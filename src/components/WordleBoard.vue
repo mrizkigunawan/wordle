@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { DEFEAT_MESSAGE, MAX_GUESS_COUNT, VICTORY_MESSAGE } from '@/settings';
   import englishWords from '@/englishWordsWith5Letters.json';
   import GuessInput from './GuessInput.vue';
 
-  defineProps({
+  const props = defineProps({
     wordOfTheDay: {
       type: String,
       required: true,
@@ -13,16 +13,20 @@
   });
 
   const guessSubmitted = ref<string[]>([]);
+
+  const isGameOver = computed(() => {
+    return (
+      guessSubmitted.value.length === MAX_GUESS_COUNT ||
+      guessSubmitted.value.includes(props.wordOfTheDay)
+    );
+  });
 </script>
 
 <template>
   <main>
     <GuessInput v-on:guess-submitted="(guess) => guessSubmitted.push(guess)" />
     <p
-      v-if="
-        guessSubmitted.length === MAX_GUESS_COUNT ||
-        guessSubmitted.includes(wordOfTheDay)
-      "
+      v-if="isGameOver"
       class="end-of-game-message"
       v-text="
         guessSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE
