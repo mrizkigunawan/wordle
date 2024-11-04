@@ -7,6 +7,7 @@ import {
   VICTORY_MESSAGE,
   WORD_SIZE,
 } from '@/settings';
+import GuessView from '../GuessView.vue';
 
 describe('WordleBoard', () => {
   const wordOfTheDay = 'TESTS';
@@ -176,6 +177,34 @@ describe('WordleBoard', () => {
       for (const guess of guesses) {
         expect(wrapper.text()).toContain(guess);
       }
+    });
+  });
+
+  describe(`there should always be exactly ${MAX_GUESS_COUNT} guess-views in the board`, async () => {
+    test(`${MAX_GUESS_COUNT} guess-views are present at the start of the game`, async () => {
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(
+        MAX_GUESS_COUNT
+      );
+    });
+
+    test(`${MAX_GUESS_COUNT} guess-views are present when the player wins the game`, async () => {
+      await playerSubmitGuess(wordOfTheDay);
+
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(
+        MAX_GUESS_COUNT
+      );
+    });
+
+    test(`${MAX_GUESS_COUNT} guess-views are present as the player loses the game`, async () => {
+      const guesses = ['WRONG', 'GUESS', 'HELLO', 'WORLD', 'HAPPY', 'CODER'];
+
+      for (const guess of guesses) {
+        await playerSubmitGuess(guess);
+      }
+
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(
+        MAX_GUESS_COUNT
+      );
     });
   });
 });
