@@ -13,6 +13,7 @@
       v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')"
       :key="`${letter}-${index}`"
       :data-letter="letter"
+      :data-letter-feedback="shouldFlip ? 'unkown' : null"
       :class="[
         'letter',
         {

@@ -214,4 +214,25 @@ describe('WordleBoard', () => {
       );
     });
   });
+
+  describe('displaying hints/feedback to the player', async () => {
+    test('hints are not displayed until the player submits', async () => {
+      expect(
+        wrapper.find('[data-letter-feedback]').exists(),
+        'Feedback was being rendered before the player started typing their guess'
+      ).toBe(false);
+
+      await playerTypesGuess(wordOfTheDay);
+      expect(
+        wrapper.find('[data-letter-feedback]').exists(),
+        'Feedback was being rendered while the player was typing their guess'
+      ).toBe(false);
+
+      await playerPressesEnter();
+      expect(
+        wrapper.find('[data-letter-feedback]').exists(),
+        'Feedback was not rendered after the player submitted their guess'
+      ).toBe(true);
+    });
+  });
 });
