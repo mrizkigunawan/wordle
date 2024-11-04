@@ -92,7 +92,8 @@ describe('WordleBoard', () => {
     });
 
     test('non-letters characters do not render on the screen while being typed', async () => {
-      await playerSubmitGuess('333');
+      await playerSubmitGuess('12');
+      await playerSubmitGuess('123');
 
       expect(
         wrapper.find<HTMLInputElement>('input[type="text"]').element.value
