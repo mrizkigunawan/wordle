@@ -33,7 +33,7 @@
   <main>
     <ul>
       <li v-for="(guess, index) in guessSubmitted" :key="`${index}-${guess}`">
-        <GuessView :guess="guess" />
+        <GuessView :guess="guess" should-flip />
       </li>
       <li>
         <GuessInput

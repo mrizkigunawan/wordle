@@ -1,7 +1,10 @@
 <script setup lang="ts">
+  import { withDefaults } from 'vue';
   import { WORD_SIZE } from '@/settings';
 
-  defineProps<{ guess: string }>();
+  withDefaults(defineProps<{ guess: string; shouldFlip?: boolean }>(), {
+    shouldFlip: false,
+  });
 </script>
 
 <template>
@@ -10,13 +13,21 @@
       v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')"
       :key="`${letter}-${index}`"
       :data-letter="letter"
-      class="letter"
+      :class="[
+        'letter',
+        {
+          'with-flips': shouldFlip,
+        },
+      ]"
       v-text="letter"
     />
   </ul>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+  $front-color: hsl(0, 0%, 99%);
+  $back-color: hsl(0, 0%, 70%);
+
   ul {
     margin: 0;
     padding: 0;
@@ -30,6 +41,7 @@
   }
 
   .letter {
+    background-color: $front-color;
     background-color: white;
     border: 1px solid hsl(0, 0%, 70%);
     width: 5rem;
@@ -51,6 +63,32 @@
     }
     50% {
       transform: scale(1.4);
+    }
+  }
+
+  $maxWordSize: 5;
+  @for $i from 1 through $maxWordSize {
+    .with-flips:nth-of-type(#{$i}) {
+      animation: flip-card 300ms forwards;
+      animation-delay: #{250 * $i}ms;
+    }
+  }
+
+  @keyframes flip-card {
+    0% {
+      transform: rotateY(0);
+      background-color: $front-color;
+    }
+    49% {
+      background-color: $front-color;
+    }
+    50% {
+      transform: rotateY(-90deg);
+      background-color: $back-color;
+    }
+    100% {
+      transform: rotateY(0);
+      background-color: $back-color;
     }
   }
 </style>
