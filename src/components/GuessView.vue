@@ -11,11 +11,11 @@
     const letterExpected = props.answer[letterPosition];
     const letterGuessed = props.guess[letterPosition];
 
-    if (!props.answer.includes(letterGuessed)) {
-      return 'incorrect';
+    if (props.answer.includes(letterGuessed)) {
+      return letterExpected === letterGuessed ? 'correct' : 'almost';
     }
 
-    return letterExpected === letterGuessed ? 'correct' : 'almost';
+    return 'incorrect';
   }
 </script>
 
@@ -34,9 +34,6 @@
 </template>
 
 <style lang="scss" scoped>
-  $front-color: hsl(0, 0%, 99%);
-  $back-color: hsl(0, 0%, 70%);
-
   ul {
     margin: 0;
     padding: 0;
@@ -50,7 +47,9 @@
   }
 
   .letter {
-    background-color: $front-color;
+    --front-color: hsl(0, 0%, 99%);
+    --back-color: hsl(0, 0%, 70%);
+    background-color: var(--front-color);
     background-color: white;
     border: 1px solid hsl(0, 0%, 70%);
     width: 5rem;
@@ -75,6 +74,18 @@
     }
   }
 
+  [data-letter-feedback='correct'] {
+    --back-color: hsl(120, 25%, 65%);
+  }
+
+  [data-letter-feedback='almost'] {
+    --back-color: hsl(40, 65%, 48%);
+  }
+
+  [data-letter-feedback='incorrect'] {
+    --back-color: hsl(0, 0%, 70%);
+  }
+
   $maxWordSize: 5;
   @for $i from 1 through $maxWordSize {
     .with-flips:nth-of-type(#{$i}) {
@@ -86,18 +97,18 @@
   @keyframes flip-card {
     0% {
       transform: rotateY(0);
-      background-color: $front-color;
+      background-color: var(--front-color);
     }
     49% {
-      background-color: $front-color;
+      background-color: var(--front-color);
     }
     50% {
       transform: rotateY(-90deg);
-      background-color: $back-color;
+      background-color: var(--back-color);
     }
     100% {
       transform: rotateY(0);
-      background-color: $back-color;
+      background-color: var(--back-color);
     }
   }
 </style>
