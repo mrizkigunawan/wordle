@@ -234,5 +234,55 @@ describe('WordleBoard', () => {
         'Feedback was not rendered after the player submitted their guess'
       ).toBe(true);
     });
+
+    describe.each([
+      {
+        position: 0,
+        expectedFeedback: 'correct',
+        reason: 'W is the first letter of "WORLD" and "WRONG',
+      },
+      {
+        position: 1,
+        expectedFeedback: 'almost',
+        reason: 'R exists in both words, but is in position "2" of "WORLD"',
+      },
+      {
+        position: 2,
+        expectedFeedback: 'almost',
+        reason: 'O exists in both words, but is in position "1" of "WOLRD"',
+      },
+      {
+        position: 3,
+        expectedFeedback: 'incorrect',
+        reason: 'N does not exist  in "WORLD"',
+      },
+      {
+        position: 4,
+        expectedFeedback: 'incorrect',
+        reason: 'G does not exist in "WORLD"',
+      },
+    ])(
+      'if the word of the day is "WORLD" and player types "WRONG',
+      async ({ expectedFeedback, position, reason }) => {
+        const wordOfTheDay = 'WORLD';
+        const playerGuess = 'WRONG';
+
+        test.skipIf(expectedFeedback !== 'correct')(
+          `the feedback for ${playerGuess[position]} (index: ${position}) should be ${expectedFeedback} because ${reason}`,
+          async () => {
+            wrapper = mount(WordleBoard, { props: { wordOfTheDay } });
+
+            await playerTypesAndSubmitsGuess(playerGuess);
+
+            const actualFeedback = wrapper
+              .findAll('[data-letter]')
+              .at(position)
+              ?.attributes('data-letter-feedback');
+
+            expect(actualFeedback).toEqual(expectedFeedback);
+          }
+        );
+      }
+    );
   });
 });
