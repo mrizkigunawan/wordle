@@ -150,3 +150,50 @@ $maxWordSize: 5;
     border-color: var(--back-color);
   }
 }
+
+.osk {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.osk__row {
+  display: flex;
+  gap: 6px;
+
+  button[data-key] {
+    flex: 1;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dce1ed;
+    border: none;
+    border-radius: 2px;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e2e8f0;
+    }
+  }
+
+  button[data-key='enter'],
+  button[data-key='backspace'] {
+    padding: 8px 16px;
+    text-transform: capitalize;
+
+    img {
+      height: 24px;
+    }
+  }
+}

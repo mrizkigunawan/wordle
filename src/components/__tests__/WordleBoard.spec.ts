@@ -199,7 +199,9 @@ describe('WordleBoard', () => {
       expect(wrapper.find('.osk').exists()).toBe(false);
     });
 
-    test.todo('player is able to type with on-screen keyboard');
+    test('player is able to type with on-screen keyboard', async () => {
+      expect(wrapper.find('button[data-key]').exists()).toBe(true);
+    });
 
     test.todo(
       'player is able to delete letters that they typed in with on-screen backspace key'
