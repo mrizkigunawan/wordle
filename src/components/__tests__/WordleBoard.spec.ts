@@ -201,6 +201,16 @@ describe('WordleBoard', () => {
 
     test('player is able to type with on-screen keyboard', async () => {
       expect(wrapper.find('button[data-key]').exists()).toBe(true);
+
+      await wrapper.find('button[data-key="w"]').trigger('click');
+      await wrapper.find('button[data-key="r"]').trigger('click');
+      await wrapper.find('button[data-key="o"]').trigger('click');
+      await wrapper.find('button[data-key="n"]').trigger('click');
+      await wrapper.find('button[data-key="g"]').trigger('click');
+
+      expect(
+        (wrapper.find('input[type=text]').element as HTMLInputElement).value
+      ).toEqual('WRONG');
     });
 
     test.todo(

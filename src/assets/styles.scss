@@ -187,8 +187,8 @@ $maxWordSize: 5;
     }
   }
 
-  button[data-key='enter'],
-  button[data-key='backspace'] {
+  button[data-key='ENTER'],
+  button[data-key='BACKSPACE'] {
     padding: 8px 16px;
     text-transform: capitalize;
 
