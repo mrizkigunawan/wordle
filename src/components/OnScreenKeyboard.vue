@@ -42,10 +42,16 @@
   ]);
 
   function typeGuess(key: string) {
-    if (guessInProgress.value) {
-      guessInProgress.value += key;
+    if (key === 'BACKSPACE') {
+      if (guessInProgress.value) {
+        guessInProgress.value = guessInProgress.value.slice(0, -1);
+      }
     } else {
-      guessInProgress.value = key;
+      if (guessInProgress.value) {
+        guessInProgress.value += key;
+      } else {
+        guessInProgress.value = key;
+      }
     }
   }
 </script>

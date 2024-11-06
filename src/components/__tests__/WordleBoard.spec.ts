@@ -8,6 +8,7 @@ import {
   WORD_SIZE,
 } from '@/settings';
 import GuessView from '../GuessView.vue';
+import { useGuessModel } from '@/composables/useGuessModel';
 
 describe('WordleBoard', () => {
   const wordOfTheDay = 'TESTS';
@@ -15,6 +16,7 @@ describe('WordleBoard', () => {
 
   beforeEach(() => {
     wrapper = mount(WordleBoard, { props: { wordOfTheDay } });
+    useGuessModel().guessInProgress.value = '';
   });
 
   async function playerTypesGuess(guess: string) {
@@ -203,19 +205,28 @@ describe('WordleBoard', () => {
       expect(wrapper.find('button[data-key]').exists()).toBe(true);
 
       await wrapper.find('button[data-key="w"]').trigger('click');
+      await wrapper.find('button[data-key="o"]').trigger('click');
+      await wrapper.find('button[data-key="r"]').trigger('click');
+      await wrapper.find('button[data-key="l"]').trigger('click');
+      await wrapper.find('button[data-key="d"]').trigger('click');
+
+      expect(
+        (wrapper.find('input[type=text]').element as HTMLInputElement).value
+      ).toEqual('WORLD');
+    });
+
+    test('player is able to delete letters that they typed in with on-screen backspace key', async () => {
+      await wrapper.find('button[data-key="w"]').trigger('click');
       await wrapper.find('button[data-key="r"]').trigger('click');
       await wrapper.find('button[data-key="o"]').trigger('click');
       await wrapper.find('button[data-key="n"]').trigger('click');
       await wrapper.find('button[data-key="g"]').trigger('click');
+      await wrapper.find('button[data-key="backspace"]').trigger('click');
 
       expect(
         (wrapper.find('input[type=text]').element as HTMLInputElement).value
-      ).toEqual('WRONG');
+      ).toEqual('WRON');
     });
-
-    test.todo(
-      'player is able to delete letters that they typed in with on-screen backspace key'
-    );
 
     test.todo('player is able to submit guess with on-screen enter key');
 
