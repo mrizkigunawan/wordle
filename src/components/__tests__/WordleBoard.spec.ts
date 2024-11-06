@@ -188,6 +188,27 @@ describe('WordleBoard', () => {
     });
   });
 
+  describe('virtual on-screen keyboards', async () => {
+    test('on-screen keyboards are visible at the start of the game', async () => {
+      const onScreenKeyboard = wrapper.find('.osk');
+      expect(onScreenKeyboard.exists()).toBe(true);
+    });
+
+    test.todo('hide on-screen keyboards at the end of the game');
+
+    test.todo('player is able to type with on-screen keyboard');
+
+    test.todo(
+      'player is able to delete letters that they typed in with on-screen backspace key'
+    );
+
+    test.todo('player is able to submit guess with on-screen enter key');
+
+    test.todo(
+      'the letters from submitted guess leave feedback that they are already typed in'
+    );
+  });
+
   describe(`there should always be exactly ${MAX_GUESS_COUNT} guess-views in the board`, async () => {
     test(`${MAX_GUESS_COUNT} guess-views are present at the start of the game`, async () => {
       expect(wrapper.findAllComponents(GuessView)).toHaveLength(

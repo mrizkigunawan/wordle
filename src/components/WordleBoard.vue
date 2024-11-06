@@ -60,5 +60,6 @@
         guessSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : wordOfTheDay
       "
     />
+    <div class="osk"></div>
   </main>
 </template>
