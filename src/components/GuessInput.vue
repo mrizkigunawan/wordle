@@ -3,6 +3,7 @@
   import { WORD_SIZE } from '@/settings';
   import englishWords from '@/englishWordsWith5Letters.json';
   import GuessView from './GuessView.vue';
+  import { useGuessModel } from '@/composables/useGuessModel';
 
   withDefaults(defineProps<{ disabled?: boolean }>(), { disabled: false });
 
@@ -10,7 +11,7 @@
     'guess-submitted': [guess: string];
   }>();
 
-  const guessInProgress = ref<string | null>(null);
+  const { guessInProgress } = useGuessModel();
   const hasFailedValidation = ref<boolean>(false);
 
   const formattedGuessInProgress = computed<string>({
