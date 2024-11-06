@@ -57,7 +57,7 @@
       v-if="isGameOver"
       class="result"
       v-text="
-        guessSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE
+        guessSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : wordOfTheDay
       "
     />
   </main>

@@ -43,9 +43,9 @@ describe('WordleBoard', () => {
         shouldSeeDefeatMessage: numberOfGuesses === MAX_GUESS_COUNT,
       }))
     )(
-      `a defeat message should appear if the player makes incorrect guesses ${MAX_GUESS_COUNT} times in a row`,
+      `the correct answer should appear if the player makes incorrect guesses ${MAX_GUESS_COUNT} times in a row`,
       async ({ numberOfGuesses, shouldSeeDefeatMessage }) => {
-        test(`therefore for ${numberOfGuesses} guess(es), a defeat message should ${
+        test(`therefore for ${numberOfGuesses} guess(es), the correct answer should ${
           shouldSeeDefeatMessage ? '' : 'not'
         } appear`, async () => {
           for (let i = 0; i < numberOfGuesses; i++) {
@@ -53,9 +53,10 @@ describe('WordleBoard', () => {
           }
 
           if (shouldSeeDefeatMessage) {
-            expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
+            expect(wrapper.find('p.result').exists()).toBe(true);
+            expect(wrapper.find('p.result').text()).toContain(wordOfTheDay);
           } else {
-            expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+            expect(wrapper.find('p.result').exists()).not.toBe(true);
           }
         });
       }
