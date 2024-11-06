@@ -190,11 +190,14 @@ describe('WordleBoard', () => {
 
   describe('virtual on-screen keyboards', async () => {
     test('on-screen keyboards are visible at the start of the game', async () => {
-      const onScreenKeyboard = wrapper.find('.osk');
-      expect(onScreenKeyboard.exists()).toBe(true);
+      expect(wrapper.find('.osk').exists()).toBe(true);
     });
 
-    test.todo('hide on-screen keyboards at the end of the game');
+    test('hide on-screen keyboards at the end of the game', async () => {
+      await playerTypesAndSubmitsGuess(wordOfTheDay);
+
+      expect(wrapper.find('.osk').exists()).toBe(false);
+    });
 
     test.todo('player is able to type with on-screen keyboard');
 

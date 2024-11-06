@@ -60,6 +60,6 @@
         guessSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : wordOfTheDay
       "
     />
-    <div class="osk"></div>
+    <div v-if="!isGameOver" class="osk"></div>
   </main>
 </template>
