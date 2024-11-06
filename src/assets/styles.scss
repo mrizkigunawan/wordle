@@ -2,7 +2,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3rem;
+  padding-top: 3rem;
+  position: relative;
 }
 
 .board-list {
@@ -16,23 +17,33 @@ main {
 }
 
 .result {
-  font-size: 1rem;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #374151;
   font-family: sans-serif;
   text-transform: uppercase;
+  padding: 12px 20px;
   background-color: #e2e8f0;
+  border-radius: 5px;
   animation: end-of-game-message-animation 700ms forwards;
+  animation-delay: 1000ms;
+  opacity: 0;
   white-space: nowrap;
   text-align: center;
+  position: absolute;
+  top: 0;
+  margin: 0;
 }
 
 @keyframes end-of-game-message-animation {
   0% {
     opacity: 0;
-    transform: rotateZ(0);
+    transform: translateY(0);
   }
   100% {
     opacity: 1;
-    transform: translateY(2rem);
+    transform: translateY(50%);
   }
 }
 
