@@ -31,63 +31,34 @@
 
 <template>
   <main>
-    <ul>
-      <li v-for="(guess, index) in guessSubmitted" :key="`${index}-${guess}`">
+    <ul class="board-list">
+      <li
+        v-for="(guess, index) in guessSubmitted"
+        :key="`${index}-${guess}`"
+        class="board-list__row"
+      >
         <GuessView :guess="guess" :answer="wordOfTheDay" />
       </li>
-      <li>
+      <li class="board-list__row">
         <GuessInput
           :disabled="isGameOver"
           v-on:guess-submitted="(guess) => guessSubmitted.push(guess)"
         />
       </li>
-      <li v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
+      <li
+        v-for="i in countOfEmptyGuesses"
+        :key="`remaining-guess-${i}`"
+        class="board-list__row"
+      >
         <GuessView guess="" />
       </li>
     </ul>
     <p
       v-if="isGameOver"
-      class="end-of-game-message"
+      class="result"
       v-text="
         guessSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE
       "
     />
   </main>
 </template>
-
-<style scoped>
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3rem;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    margin-bottom: 0.25rem;
-  }
-
-  .end-of-game-message {
-    font-size: 3rem;
-    animation: end-of-game-message-animation 700ms forwards;
-    white-space: nowrap;
-    text-align: center;
-  }
-
-  @keyframes end-of-game-message-animation {
-    0% {
-      opacity: 0;
-      transform: rotateZ(0);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(2rem);
-    }
-  }
-</style>

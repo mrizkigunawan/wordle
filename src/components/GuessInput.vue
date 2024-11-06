@@ -53,35 +53,8 @@
     :disabled="disabled"
     aria-label="Make your guess for the word of the day!"
     :maxlength="WORD_SIZE"
+    class="guess-input"
     @blur="({ target }) => (target as HTMLInputElement).focus()"
     @keydown.enter="onSubmit"
   />
 </template>
-
-<style scoped>
-  input {
-    position: absolute;
-    opacity: 0;
-  }
-
-  .shake {
-    animation-name: shake;
-    animation-duration: 100ms;
-    animation-iteration-count: 2;
-  }
-
-  @keyframes shake {
-    0% {
-      transform: translateX(-2%);
-    }
-    25% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(2%);
-    }
-    75% {
-      transform: translateX(0);
-    }
-  }
-</style>
