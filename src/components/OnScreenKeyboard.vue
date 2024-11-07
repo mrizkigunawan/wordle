@@ -46,6 +46,12 @@
       if (guessInProgress.value) {
         guessInProgress.value = guessInProgress.value.slice(0, -1);
       }
+    } else if (key === 'ENTER') {
+      const evnt = new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+      });
+      document.querySelector('input[type=text]')?.dispatchEvent(evnt);
     } else {
       if (guessInProgress.value) {
         guessInProgress.value += key;
