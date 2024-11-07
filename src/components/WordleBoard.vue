@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue';
+  import { computed, onMounted } from 'vue';
   import { MAX_GUESS_COUNT, VICTORY_MESSAGE } from '@/settings';
   import englishWords from '@/englishWordsWith5Letters.json';
   import GuessInput from './GuessInput.vue';
   import GuessView from './GuessView.vue';
   import OnScreenKeyboard from './OnScreenKeyboard.vue';
+  import { useGuessModel } from '@/composables/useGuessModel';
 
   const props = defineProps({
     wordOfTheDay: {
@@ -14,7 +15,7 @@
     },
   });
 
-  const guessSubmitted = ref<string[]>([]);
+  const { guessSubmitted, resetGuessModel } = useGuessModel();
 
   const isGameOver = computed(() => {
     return (
@@ -27,6 +28,10 @@
     const guessRemaining = MAX_GUESS_COUNT - guessSubmitted.value.length;
 
     return isGameOver.value ? guessRemaining : guessRemaining - 1;
+  });
+
+  onMounted(() => {
+    resetGuessModel();
   });
 </script>
 
