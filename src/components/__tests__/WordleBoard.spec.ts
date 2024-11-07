@@ -225,15 +225,20 @@ describe('WordleBoard', () => {
       ).toEqual('WRON');
     });
 
-    // test('player is able to submit guess with on-screen enter key', async () => {
-    // });
-
     test('the letters from submitted guess leave feedback that they are already typed in', async () => {
       await playerTypesAndSubmitsGuess('WRONG');
 
       expect(wrapper.find('button[data-key="w"][data-typed]').exists()).toBe(
         true
       );
+    });
+
+    test('the play again button should appear at the end of the game', async () => {
+      expect(wrapper.find('button.play-again').exists()).not.toBe(true);
+
+      await playerTypesAndSubmitsGuess(wordOfTheDay);
+
+      expect(wrapper.find('button.play-again').exists()).toBe(true);
     });
   });
 

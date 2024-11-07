@@ -6,6 +6,7 @@
   import GuessView from './GuessView.vue';
   import OnScreenKeyboard from './OnScreenKeyboard.vue';
   import { useGuessModel } from '@/composables/useGuessModel';
+  import PlayButton from './PlayButton.vue';
 
   const props = defineProps({
     wordOfTheDay: {
@@ -67,5 +68,6 @@
       "
     />
     <OnScreenKeyboard v-if="!isGameOver" />
+    <PlayButton v-if="isGameOver" />
   </main>
 </template>
