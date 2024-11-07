@@ -1,14 +1,12 @@
 import { mount } from '@vue/test-utils';
+import GuessView from '../GuessView.vue';
 import WordleBoard from '../WordleBoard.vue';
-
 import {
   DEFEAT_MESSAGE,
   MAX_GUESS_COUNT,
   VICTORY_MESSAGE,
   WORD_SIZE,
 } from '@/settings';
-import GuessView from '../GuessView.vue';
-import { useGuessModel } from '@/composables/useGuessModel';
 
 describe('WordleBoard', () => {
   const wordOfTheDay = 'TESTS';
@@ -16,7 +14,6 @@ describe('WordleBoard', () => {
 
   beforeEach(() => {
     wrapper = mount(WordleBoard, { props: { wordOfTheDay } });
-    useGuessModel().guessInProgress.value = '';
   });
 
   async function playerTypesGuess(guess: string) {
@@ -228,11 +225,16 @@ describe('WordleBoard', () => {
       ).toEqual('WRON');
     });
 
-    test.todo('player is able to submit guess with on-screen enter key');
+    // test('player is able to submit guess with on-screen enter key', async () => {
+    // });
 
-    test.todo(
-      'the letters from submitted guess leave feedback that they are already typed in'
-    );
+    test('the letters from submitted guess leave feedback that they are already typed in', async () => {
+      await playerTypesAndSubmitsGuess('WRONG');
+
+      expect(wrapper.find('button[data-key="w"][data-typed]').exists()).toBe(
+        true
+      );
+    });
   });
 
   describe(`there should always be exactly ${MAX_GUESS_COUNT} guess-views in the board`, async () => {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { useGuessModel } from '@/composables/useGuessModel';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
 
-  const { guessInProgress } = useGuessModel();
+  const { guessInProgress, guessSubmitted } = useGuessModel();
 
   const keys = ref([
     [
@@ -41,17 +41,31 @@
     ],
   ]);
 
+  watch(
+    guessSubmitted,
+    (newVal) => {
+      if (!newVal.length) return;
+      const currentGuessWord = newVal[newVal.length - 1];
+
+      keys.value = keys.value.map((row) => {
+        return row.map((item) => {
+          if (currentGuessWord.toLowerCase().includes(item.key)) {
+            item.isTyped = true;
+          }
+          return item;
+        });
+      });
+    },
+    { deep: true }
+  );
+
   function typeGuess(key: string) {
     if (key === 'BACKSPACE') {
       if (guessInProgress.value) {
         guessInProgress.value = guessInProgress.value.slice(0, -1);
       }
     } else if (key === 'ENTER') {
-      const evnt = new KeyboardEvent('keydown', {
-        key: 'Enter',
-        code: 'Enter',
-      });
-      document.querySelector('input[type=text]')?.dispatchEvent(evnt);
+      submitGuess();
     } else {
       if (guessInProgress.value) {
         guessInProgress.value += key;
@@ -59,6 +73,14 @@
         guessInProgress.value = key;
       }
     }
+  }
+
+  function submitGuess() {
+    const evnt = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      code: 'Enter',
+    });
+    document.querySelector('input[type=text]')?.dispatchEvent(evnt);
   }
 </script>
 
@@ -74,6 +96,7 @@
         :key="`key-${keyObj.key}`"
         tabindex="-1"
         :data-key="keyObj.key"
+        :data-typed="keyObj.isTyped ? '' : null"
         @click="typeGuess(keyObj.key.toUpperCase())"
       >
         <template v-if="keyObj.key === 'backspace'">
